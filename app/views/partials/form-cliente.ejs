@@ -1,71 +1,251 @@
-  <div class="form-horizontal">
-                <hr />
-                <div class="form-group">
-                    <label for="nome" class="control-label col-md-2">Nome</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="nome" id="">
-                    </div>
-                </div>
+<div class="form-horizontal">
+    <hr />
 
-                <div class="form-group">
-                    <label for="cep" class="control-label col-md-2">CEP</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="cep" id="">
-                    </div>
-                </div>
+    <% if (typeof erros !== 'undefined' && erros.length > 0) { %>
+        <div class="alert alert-danger">
+            <strong>Corrija os seguintes erros:</strong>
 
-                <div class="form-group" style="display:flex">
-                    <label for="" class="control-label col-md-2">Imagem Perfil</label>
-                    <div class="col-md-5">
-                        <input class="form-control" type="file" name="ImagemPerfil" id="">
-                    </div>
-                    <img id="img-preview" src="../imagem/img_login.png" style="max-width:80px; max-height:80px;" />
-                </div>
+            <ul style="margin-bottom: 0;">
+                <% erros.forEach(erro => { %>
+                    <li><%= erro.msg %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
 
-                <div class="form-group">
-                    <label for="nomeUsuario" class="control-label col-md-2">Nome de Usuário</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="nomeUsuario" id="">
-                    </div>
-                </div>
+    <div class="form-group">
+        <label for="nome" class="control-label col-md-2">
+            Nome
+        </label>
 
-                <div class="form-group">
-                    <label for="email" class="control-label col-md-2">E-mail</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="email" id="">
-                    </div>
-                </div>
+        <div class="col-md-10">
+            <input
+                class="form-control"
+                type="text"
+                name="nome"
+                id="nome"
+                value="<%= typeof dados !== 'undefined' ? (dados.nome || '') : '' %>"
+            >
 
-                <div class="form-group">
-                    <label for="senha" class="control-label col-md-2">Senha</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="password" name="senha" id="">
-                    </div>
-                </div>
+            <% if (typeof erros !== 'undefined') { %>
+                <% const erroNome = erros.find(erro => erro.path === 'nome') %>
 
-                <div class="form-group">
-                    <label for="tipo" class="control-label col-md-2">Tipo Usuario</label>
-                    <div class="col-md-10">
-                        <select name="tipo" id="" class="form-control">
-                            <option value="1">Comum</option>
-                            <option value="2">Gerente</option>
-                        </select>
-                    </div>
-                </div>
+                <% if (erroNome) { %>
+                    <span class="text-danger">
+                        <%= erroNome.msg %>
+                    </span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
 
-                <div class="form-group">
-                    <label for="status" class="control-label col-md-2">Status</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="status" id="">
-                            <option value="1">Ativo</option>
-                            <option value="0">Inativo</option>
-                        </select>
-                    </div>
-                </div>
+    <div class="form-group">
+        <label for="cep" class="control-label col-md-2">
+            CEP
+        </label>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Salvar" class="btn btn-success" />
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-10">
+            <input
+                class="form-control"
+                type="text"
+                name="cep"
+                id="cep"
+                value="<%= typeof dados !== 'undefined' ? (dados.cep || '') : '' %>"
+                placeholder="Ex: 12345-678"
+            >
+
+            <% if (typeof erros !== 'undefined') { %>
+                <% const erroCep = erros.find(erro => erro.path === 'cep') %>
+
+                <% if (erroCep) { %>
+                    <span class="text-danger">
+                        <%= erroCep.msg %>
+                    </span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="form-group" style="display:flex; align-items:center;">
+
+        <label for="ImagemPerfil" class="control-label col-md-2">
+            Imagem Perfil
+        </label>
+
+        <div class="col-md-5">
+            <input
+                class="form-control"
+                type="file"
+                name="ImagemPerfil"
+                id="ImagemPerfil"
+            >
+        </div>
+
+        <img
+            id="img-preview"
+            src="../imagem/img_login.png"
+            style="max-width:80px; max-height:80px;"
+        />
+
+    </div>
+
+    <div class="form-group">
+        <label for="nomeUsuario" class="control-label col-md-2">
+            Nome de Usuário
+        </label>
+
+        <div class="col-md-10">
+            <input
+                class="form-control"
+                type="text"
+                name="nomeUsuario"
+                id="nomeUsuario"
+                value="<%= typeof dados !== 'undefined' ? (dados.nomeUsuario || '') : '' %>"
+            >
+
+            <% if (typeof erros !== 'undefined') { %>
+                <% const erroUsuario = erros.find(erro => erro.path === 'nomeUsuario') %>
+
+                <% if (erroUsuario) { %>
+                    <span class="text-danger">
+                        <%= erroUsuario.msg %>
+                    </span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email" class="control-label col-md-2">
+            E-mail
+        </label>
+
+        <div class="col-md-10">
+            <input
+                class="form-control"
+                type="email"
+                name="email"
+                id="email"
+                value="<%= typeof dados !== 'undefined' ? (dados.email || '') : '' %>"
+            >
+
+            <% if (typeof erros !== 'undefined') { %>
+                <% const erroEmail = erros.find(erro => erro.path === 'email') %>
+
+                <% if (erroEmail) { %>
+                    <span class="text-danger">
+                        <%= erroEmail.msg %>
+                    </span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="senha" class="control-label col-md-2">
+            Senha
+        </label>
+
+        <div class="col-md-10">
+            <input
+                class="form-control"
+                type="password"
+                name="senha"
+                id="senha"
+            >
+
+            <% if (typeof erros !== 'undefined') { %>
+                <% const erroSenha = erros.find(erro => erro.path === 'senha') %>
+
+                <% if (erroSenha) { %>
+                    <span class="text-danger">
+                        <%= erroSenha.msg %>
+                    </span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="tipo" class="control-label col-md-2">
+            Tipo Usuario
+        </label>
+
+        <div class="col-md-10">
+            <select
+                name="tipo"
+                id="tipo"
+                class="form-control"
+            >
+                <option value="1"
+                    <%= typeof dados !== 'undefined' && dados.tipo == '1' ? 'selected' : '' %>>
+                    Comum
+                </option>
+
+                <option value="2"
+                    <%= typeof dados !== 'undefined' && dados.tipo == '2' ? 'selected' : '' %>>
+                    Gerente
+                </option>
+            </select>
+
+            <% if (typeof erros !== 'undefined') { %>
+                <% const erroTipo = erros.find(erro => erro.path === 'tipo') %>
+
+                <% if (erroTipo) { %>
+                    <span class="text-danger">
+                        <%= erroTipo.msg %>
+                    </span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+
+    <!-- STATUS -->
+    <div class="form-group">
+        <label for="status" class="control-label col-md-2">
+            Status
+        </label>
+
+        <div class="col-md-10">
+            <select
+                class="form-control"
+                name="status"
+                id="status"
+            >
+                <option value="1"
+                    <%= typeof dados !== 'undefined' && dados.status == '1' ? 'selected' : '' %>>
+                    Ativo
+                </option>
+
+                <option value="0"
+                    <%= typeof dados !== 'undefined' && dados.status == '0' ? 'selected' : '' %>>
+                    Inativo
+                </option>
+            </select>
+
+            <% if (typeof erros !== 'undefined') { %>
+                <% const erroStatus = erros.find(erro => erro.path === 'status') %>
+
+                <% if (erroStatus) { %>
+                    <span class="text-danger">
+                        <%= erroStatus.msg %>
+                    </span>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+
+    <!-- BOTÃO SALVAR -->
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input
+                type="submit"
+                value="Salvar"
+                class="btn btn-success"
+            />
+        </div>
+    </div>
+
+</div>
